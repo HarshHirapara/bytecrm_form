@@ -1,5 +1,5 @@
-import 'package:bytecrm_form/core/common_colors.dart';
-import 'package:bytecrm_form/core/common_icons.dart';
+import 'package:bytecrm_form/core/constant/common_colors.dart';
+import 'package:bytecrm_form/core/constant/common_icons.dart';
 import 'package:bytecrm_form/module/widget/common_text.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class CommonFormStepCheck extends StatelessWidget {
       children: [
         if (leftLine)
           SizedBox(
-            width: 32,
+            width: 42,
             child: Divider(
               thickness: 2,
               color: isFilled ? CommonColor.green : CommonColor.blue,
@@ -47,7 +47,7 @@ class CommonFormStepCheck extends StatelessWidget {
         ),
         if (rightLine)
           SizedBox(
-            width: 32,
+            width: 42,
             child: Divider(
               thickness: 2,
               color: isFilled ? CommonColor.green : CommonColor.blue,
@@ -76,7 +76,7 @@ class CommonPageNumber extends StatelessWidget {
       children: [
         if (leftLine)
           SizedBox(
-            width: 40,
+            width: 50,
             child: Divider(
               thickness: 2,
               color: isFilled ? CommonColor.green : CommonColor.blue,
@@ -102,7 +102,7 @@ class CommonPageNumber extends StatelessWidget {
         ),
         if (rightLine)
           SizedBox(
-            width: 40,
+            width: 50,
             child: Divider(
               thickness: 2,
               color: isFilled ? CommonColor.green : CommonColor.blue,
