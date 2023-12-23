@@ -13,6 +13,8 @@ class CommonButtonWithIcon extends StatelessWidget {
     this.fontSize,
     this.fontWeight,
     required this.decoration,
+    this.width,
+    this.height,
   });
 
   final void Function() onPressed;
@@ -24,10 +26,14 @@ class CommonButtonWithIcon extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontWeight;
   final Decoration decoration;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height,
+      width: width,
       decoration: decoration,
       child: Directionality(
         textDirection: textDirection,
@@ -53,10 +59,12 @@ class CommonButtonWithoutIcon extends StatelessWidget {
     required this.onPressed,
     required this.text,
     required this.style,
+    required this.decoration,
     this.color,
     this.fontSize,
     this.fontWeight,
-    required this.decoration,
+    this.width,
+    this.height,
   });
 
   final void Function() onPressed;
@@ -66,10 +74,14 @@ class CommonButtonWithoutIcon extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontWeight;
   final Decoration decoration;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: width,
+      height: height,
       decoration: decoration,
       child: ElevatedButton(
         onPressed: onPressed,

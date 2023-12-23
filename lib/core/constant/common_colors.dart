@@ -11,4 +11,5 @@ class CommonColor {
   static const buttonColor3 = Color(0xFF0293cc);
   static const blue = Color(0xFF1c9cd9);
   static const green = Color(0xFF01bb1c);
+  static const orange = Color.fromARGB(255, 225, 154, 73);
 }

@@ -20,7 +20,7 @@ class CommonFormStepCheck extends StatelessWidget {
       children: [
         if (leftLine)
           SizedBox(
-            width: 42,
+            width: 41,
             child: Divider(
               thickness: 2,
               color: isFilled ? CommonColor.green : CommonColor.blue,
@@ -47,7 +47,7 @@ class CommonFormStepCheck extends StatelessWidget {
         ),
         if (rightLine)
           SizedBox(
-            width: 42,
+            width: 41,
             child: Divider(
               thickness: 2,
               color: isFilled ? CommonColor.green : CommonColor.blue,
@@ -76,7 +76,7 @@ class CommonPageNumber extends StatelessWidget {
       children: [
         if (leftLine)
           SizedBox(
-            width: 50,
+            width: 49,
             child: Divider(
               thickness: 2,
               color: isFilled ? CommonColor.green : CommonColor.blue,
@@ -102,7 +102,7 @@ class CommonPageNumber extends StatelessWidget {
         ),
         if (rightLine)
           SizedBox(
-            width: 50,
+            width: 49,
             child: Divider(
               thickness: 2,
               color: isFilled ? CommonColor.green : CommonColor.blue,

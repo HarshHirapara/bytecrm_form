@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:bytecrm_form/core/constant/common_colors.dart';
 import 'package:bytecrm_form/core/constant/common_icons.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
 import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
+import 'package:bytecrm_form/module/screen/joining_details_form_screen/joining_details_form.dart';
 import 'package:bytecrm_form/module/screen/personal_details_from_screen/personal_details_form_screen.dart';
 import 'package:bytecrm_form/module/widget/common_button.dart';
 import 'package:bytecrm_form/module/widget/common_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import '../../widget/common_form_steps.dart';
 
@@ -23,7 +27,7 @@ class FormMainPage extends StatelessWidget {
           title: const CommonText(
             text: CommonString.updateEmployee,
             color: CommonColor.black,
-            fontSize: 23,
+            fontSize: 21,
             fontWeight: FontWeight.bold,
           ),
           backgroundColor: CommonColor.transparent,
@@ -35,7 +39,7 @@ class FormMainPage extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                padding: const EdgeInsets.only(top: 25, bottom: 10),
                 child: SizedBox(
                   width: 326,
                   child: Column(
@@ -72,11 +76,14 @@ class FormMainPage extends StatelessWidget {
                             (GetXProperties.currentPage.value >= 2)
                                 ? CommonFormStepCheck(
                                     isFilled:
-                                        (GetXProperties.currentPage.value > 2)
+                                        (GetXProperties.currentPage.value > 2 ||
+                                                GetXProperties
+                                                    .pageThreeIsDone.value)
                                             ? true
                                             : false,
                                     leftLine: true,
-                                    rightLine: false)
+                                    rightLine: false,
+                                  )
                                 : const CommonPageNumber(
                                     pageNumber: CommonString.pageNumber3,
                                     isFilled: false,
@@ -168,18 +175,17 @@ class FormMainPage extends StatelessWidget {
               Expanded(
                 child: PageView(
                   controller: controller,
-                  children: [
-                    const PersonalDetailsFormScreen(),
-                    Container(
-                      color: Colors.green,
-                    ),
-                    Container(
-                      color: Colors.lightGreenAccent,
-                    )
-                  ],
+                  physics: const NeverScrollableScrollPhysics(),
                   onPageChanged: (value) {
                     GetXProperties.currentPage.value = value;
                   },
+                  children: [
+                    const PersonalDetailsFormScreen(),
+                    const JoiningDetailsFormScreen(),
+                    Container(
+                      color: CommonColor.blue,
+                    )
+                  ],
                 ),
               ),
             ],
@@ -188,41 +194,43 @@ class FormMainPage extends StatelessWidget {
         bottomSheet: SizedBox(
           height: 80,
           child: Padding(
-            padding: const EdgeInsets.only(top: 1, bottom: 4, right: 16),
+            padding: const EdgeInsets.only(top: 1, bottom: 4, right: 18),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Obx(
                   () => (GetXProperties.currentPage.value == 0)
                       ? CommonButtonWithoutIcon(
+                          height: 55,
                           onPressed: () {},
                           text: CommonString.cancelButton,
                           fontSize: 20,
                           color: CommonColor.coffee,
-                          style: ButtonStyle(
-                            padding: const MaterialStatePropertyAll(
+                          style: const ButtonStyle(
+                            padding: MaterialStatePropertyAll(
                               EdgeInsets.only(
-                                  left: 42, right: 42, top: 13, bottom: 13),
+                                  left: 41, right: 41, top: 12, bottom: 12),
                             ),
-                            backgroundColor: const MaterialStatePropertyAll(
+                            backgroundColor: MaterialStatePropertyAll(
                                 CommonColor.transparent),
-                            elevation: const MaterialStatePropertyAll(0),
-                            side: MaterialStateProperty.all(
-                              const BorderSide(
-                                  width: 1.5, color: CommonColor.coffee),
-                            ),
+                            elevation: MaterialStatePropertyAll(0),
                           ),
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(6),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1.5, color: CommonColor.coffee),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(7),
                             ),
                           ),
                         )
                       : CommonButtonWithIcon(
+                          height: 55,
                           onPressed: () {
                             controller.previousPage(
-                                duration: const Duration(microseconds: 1),
-                                curve: Curves.bounceIn);
+                              duration: const Duration(microseconds: 1),
+                              curve: Curves.bounceIn,
+                            );
+                            GetXProperties.pageThreeIsDone.value = false;
                           },
                           textDirection: TextDirection.ltr,
                           text: CommonString.backButton,
@@ -233,23 +241,21 @@ class FormMainPage extends StatelessWidget {
                             size: 30,
                             color: CommonColor.coffee,
                           ),
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(6),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1.5, color: CommonColor.coffee),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(7),
                             ),
                           ),
-                          style: ButtonStyle(
-                            padding: const MaterialStatePropertyAll(
+                          style: const ButtonStyle(
+                            padding: MaterialStatePropertyAll(
                               EdgeInsets.only(
-                                  left: 25, right: 35, top: 10, bottom: 10),
+                                  left: 24, right: 34, top: 9, bottom: 9),
                             ),
-                            backgroundColor: const MaterialStatePropertyAll(
+                            backgroundColor: MaterialStatePropertyAll(
                                 CommonColor.transparent),
-                            elevation: const MaterialStatePropertyAll(0),
-                            side: MaterialStateProperty.all(
-                              const BorderSide(
-                                  width: 1.5, color: CommonColor.coffee),
-                            ),
+                            elevation: MaterialStatePropertyAll(0),
                           ),
                         ),
                 ),
@@ -259,7 +265,10 @@ class FormMainPage extends StatelessWidget {
                 Obx(
                   () => (GetXProperties.currentPage.value == 2)
                       ? CommonButtonWithoutIcon(
-                          onPressed: () {},
+                          height: 55,
+                          onPressed: () {
+                            GetXProperties.pageThreeIsDone.value = true;
+                          },
                           text: CommonString.done,
                           fontSize: 20,
                           color: CommonColor.white,
@@ -281,16 +290,34 @@ class FormMainPage extends StatelessWidget {
                               ],
                             ),
                             borderRadius: BorderRadius.all(
-                              Radius.circular(6),
+                              Radius.circular(7),
                             ),
                           ),
                         )
                       : CommonButtonWithIcon(
+                          height: 55,
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              controller.nextPage(
+                              if (GetXProperties.currentPage.value == 1) {
+                                if (GetXProperties.workingHours.value != 0) {
+                                  controller.nextPage(
+                                    duration: const Duration(microseconds: 1),
+                                    curve: Curves.bounceIn,
+                                  );
+                                } else {
+                                  Get.snackbar(
+                                    CommonString.snackBarTitle,
+                                    CommonString.snackBarMessage,
+                                    backgroundColor: CommonColor.blue,
+                                  );
+                                }
+                              } else {
+                                controller.nextPage(
                                   duration: const Duration(microseconds: 1),
-                                  curve: Curves.bounceIn);
+                                  curve: Curves.bounceIn,
+                                );
+                                GetXProperties.pageThreeIsDone.value = false;
+                              }
                             }
                           },
                           textDirection: TextDirection.rtl,
@@ -311,7 +338,7 @@ class FormMainPage extends StatelessWidget {
                               ],
                             ),
                             borderRadius: BorderRadius.all(
-                              Radius.circular(6),
+                              Radius.circular(7),
                             ),
                           ),
                           style: const ButtonStyle(
