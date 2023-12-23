@@ -18,8 +18,6 @@ class PersonalDetailsFormScreen extends StatefulWidget {
 class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
   @override
   Widget build(BuildContext context) {
-    // final screenHight = MediaQuery.of(context).size.height;
-    // final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -80,7 +78,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                     keyBoardType: TextInputType.text,
                     label: CommonString.fullName,
                     validator: (value) =>
-                        value!.isEmpty ? 'Please Enter Name' : null,
+                        value!.isEmpty ? CommonString.enterName : null,
                   ),
                   Row(
                     children: [
@@ -120,10 +118,10 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               GetXProperties.numberIsNotValid.value = true;
-                              return 'Please enter mobile number';
-                            } else if (value.length < 10) {
+                              return CommonString.enterMobileNumber;
+                            } else if (value.length < 10 || value.length > 10) {
                               GetXProperties.numberIsNotValid.value = true;
-                              return 'Mobile number must be 10 digits';
+                              return CommonString.mobileMustBe10Digits;
                             } else {
                               GetXProperties.numberIsNotValid.value = false;
                               return null;
@@ -138,14 +136,14 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                       label: CommonString.emailId,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter email';
+                          return CommonString.enterEmail;
                         } else {
                           if (RegExp(
                                   r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
                               .hasMatch(value)) {
                             return null;
                           } else {
-                            return 'Email is not valid';
+                            return CommonString.emailNotValid;
                           }
                         }
                       }),
@@ -154,15 +152,14 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                       Expanded(
                         child: Column(
                           children: [
-                            CommonTextFieldWithIcon(
+                            CommonTextFieldForDate(
                               keyBoardType: TextInputType.datetime,
-                              icon: CommonIcon.calender,
                               label: CommonString.birthDate,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   GetXProperties
                                       .anniversaryDateIsNotValid.value = true;
-                                  return 'Please select birth date';
+                                  return CommonString.selectBirthDate;
                                 }
                                 GetXProperties.anniversaryDateIsNotValid.value =
                                     false;
@@ -182,15 +179,14 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                       Expanded(
                         child: Column(
                           children: [
-                            CommonTextFieldWithIcon(
+                            CommonTextFieldForDate(
                               keyBoardType: TextInputType.datetime,
-                              icon: CommonIcon.calender,
                               label: CommonString.anniversaryDate,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   GetXProperties.birthDateIsNotValid.value =
                                       true;
-                                  return 'Please select anniversary date';
+                                  return CommonString.selectAnniversaryDate;
                                 }
                                 GetXProperties.birthDateIsNotValid.value =
                                     false;
@@ -221,7 +217,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   GetXProperties.roleIsNotValid.value = true;
-                                  return 'please enter designation';
+                                  return CommonString.enterDesignation;
                                 }
                                 GetXProperties.roleIsNotValid.value = false;
                                 return null;
@@ -247,7 +243,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                                 if (value == null) {
                                   GetXProperties.designationIsNotValid.value =
                                       true;
-                                  return 'Please enter role';
+                                  return CommonString.selectRole;
                                 }
                                 GetXProperties.designationIsNotValid.value =
                                     false;
@@ -270,7 +266,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                     label: CommonString.reportsTo,
                     validator: (value) {
                       if (value == null) {
-                        return 'Please enter report';
+                        return CommonString.selectReport;
                       }
                       return null;
                     },
@@ -284,27 +280,3 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
     );
   }
 }
-
-//  DateTime? datePicked = await showDatePicker(
-//                   builder: (context, child) {
-//                     return Theme(
-//                         data: ThemeData(primarySwatch: Colors.pink),
-//                         // data: Theme.of(context).copyWith(
-//                         //   colorScheme: const ColorScheme.light(
-//                         //     primary: Colors.blueGrey,
-//                         //     onPrimary: Colors.black,
-//                         //     onSurface: Colors.black,
-//                         //   ),
-//                         // ),
-//                         child: child!);
-//                   },
-//                   context: context,
-//                   initialDate: DateTime.now(),
-//                   firstDate: DateTime(2000),
-//                   lastDate: DateTime.now(),
-//                 );
-//                 if (datePicked != null) {
-//                   setState(() {
-//                     date = datePicked;
-//                   });
-//                 }

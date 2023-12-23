@@ -1,4 +1,5 @@
 import 'package:bytecrm_form/core/constant/common_colors.dart';
+import 'package:bytecrm_form/core/constant/common_icons.dart';
 import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
 import 'package:bytecrm_form/module/widget/common_text.dart';
 import 'package:flutter/material.dart';
@@ -33,15 +34,14 @@ class CommonTextField extends StatelessWidget {
   }
 }
 
-class CommonTextFieldWithIcon extends StatelessWidget {
-  const CommonTextFieldWithIcon({
+class CommonTextFieldForDate extends StatelessWidget {
+  const CommonTextFieldForDate({
     super.key,
-    required this.icon,
     required this.label,
     required this.validator,
     required this.keyBoardType,
   });
-  final Icon icon;
+
   final String label;
   final String? Function(String?) validator;
   final TextInputType keyBoardType;
@@ -75,11 +75,11 @@ class CommonTextFieldWithIcon extends StatelessWidget {
               if (datePicker != null) {
                 selectedDate = datePicker;
                 date.text =
-                    '${datePicker.day}/${datePicker.month}/${datePicker.year}';
+                    '${datePicker.day} ${GetXProperties.monthsList[datePicker.month - 1]} ${datePicker.year}';
               }
             },
             child: Icon(
-              icon.icon,
+              CommonIcon.calender.icon,
               color: CommonColor.coffee,
             ),
           ),
@@ -100,26 +100,30 @@ class CommonDropDownButtonTextFiled extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: DropdownButtonFormField(
-        value: GetXProperties.dropDownValue,
-        decoration: InputDecoration(
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          label: CommonText(text: label),
-          hintText: label,
-          border: const OutlineInputBorder(),
-        ),
-        validator: validator,
-        items: GetXProperties.dropDownList.map<DropdownMenuItem<String>>(
-          (String value) {
-            return DropdownMenuItem(
-              value: value,
-              child: Text(value),
-            );
+      child: ButtonTheme(
+        alignedDropdown: true,
+        child: DropdownButtonFormField(
+          isExpanded: true,
+          value: GetXProperties.dropDownValue,
+          decoration: InputDecoration(
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            label: CommonText(text: label),
+            hintText: label,
+            border: const OutlineInputBorder(),
+          ),
+          validator: validator,
+          items: GetXProperties.dropDownList.map<DropdownMenuItem<String>>(
+            (String value) {
+              return DropdownMenuItem(
+                value: value,
+                child: Text(value),
+              );
+            },
+          ).toList(),
+          onChanged: (String? value) {
+            GetXProperties.dropDownValue = value!;
           },
-        ).toList(),
-        onChanged: (String? value) {
-          GetXProperties.dropDownValue = value!;
-        },
+        ),
       ),
     );
   }
