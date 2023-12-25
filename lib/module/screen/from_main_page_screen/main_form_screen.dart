@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bytecrm_form/core/constant/common_colors.dart';
 import 'package:bytecrm_form/core/constant/common_icons.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
@@ -9,13 +7,12 @@ import 'package:bytecrm_form/module/screen/personal_details_from_screen/personal
 import 'package:bytecrm_form/module/widget/common_button.dart';
 import 'package:bytecrm_form/module/widget/common_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import '../../widget/common_form_steps.dart';
 
 class FormMainPage extends StatelessWidget {
   const FormMainPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
@@ -24,6 +21,7 @@ class FormMainPage extends StatelessWidget {
       key: formKey,
       child: Scaffold(
         appBar: AppBar(
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
           title: const CommonText(
             text: CommonString.updateEmployee,
             color: CommonColor.black,
@@ -40,76 +38,80 @@ class FormMainPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 10),
-                child: SizedBox(
-                  width: 326,
-                  child: Column(
-                    children: [
-                      Obx(
-                        () => Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                width: GetXProperties.currentPage.value == 2
-                                    ? 8
-                                    : null),
-                            CommonFormStepCheck(
-                              isFilled: (GetXProperties.currentPage.value > 0)
-                                  ? true
-                                  : false,
-                              leftLine: false,
-                              rightLine: true,
-                            ),
-                            (GetXProperties.currentPage.value >= 1)
-                                ? CommonFormStepCheck(
-                                    isFilled:
-                                        (GetXProperties.currentPage.value > 1)
-                                            ? true
-                                            : false,
-                                    leftLine: true,
-                                    rightLine: true)
-                                : const CommonPageNumber(
-                                    pageNumber: CommonString.pageNumber2,
-                                    isFilled: false,
-                                    leftLine: true,
-                                    rightLine: true,
-                                  ),
-                            (GetXProperties.currentPage.value >= 2)
-                                ? CommonFormStepCheck(
-                                    isFilled:
-                                        (GetXProperties.currentPage.value > 2 ||
-                                                GetXProperties
-                                                    .pageThreeIsDone.value)
-                                            ? true
-                                            : false,
-                                    leftLine: true,
-                                    rightLine: false,
-                                  )
-                                : const CommonPageNumber(
-                                    pageNumber: CommonString.pageNumber3,
-                                    isFilled: false,
-                                    leftLine: true,
-                                    rightLine: false,
-                                  )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        child: Obx(
-                          () => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  children: [
+                    Obx(
+                      () => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: GetXProperties.currentPage.value == 2
+                                  ? 8
+                                  : null),
+                          Column(
                             children: [
-                              Column(
-                                children: [
-                                  CommonText(
-                                    text: CommonString.personal,
-                                    color:
-                                        (GetXProperties.currentPage.value == 0)
-                                            ? CommonColor.black
-                                            : CommonColor.coffee,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  CommonText(
+                              CommonFormStepCheck(
+                                isFilled: (GetXProperties.currentPage.value > 0)
+                                    ? true
+                                    : false,
+                                leftLine: false,
+                                rightLine: true,
+                              ),
+                            ],
+                          ),
+                          (GetXProperties.currentPage.value >= 1)
+                              ? CommonFormStepCheck(
+                                  isFilled:
+                                      (GetXProperties.currentPage.value > 1)
+                                          ? true
+                                          : false,
+                                  leftLine: true,
+                                  rightLine: true)
+                              : const CommonPageNumber(
+                                  pageNumber: CommonString.pageNumber2,
+                                  isFilled: false,
+                                  leftLine: true,
+                                  rightLine: true,
+                                ),
+                          (GetXProperties.currentPage.value >= 2)
+                              ? CommonFormStepCheck(
+                                  isFilled: (GetXProperties.currentPage.value >
+                                              2 ||
+                                          GetXProperties.pageThreeIsDone.value)
+                                      ? true
+                                      : false,
+                                  leftLine: true,
+                                  rightLine: false,
+                                )
+                              : const CommonPageNumber(
+                                  pageNumber: CommonString.pageNumber3,
+                                  isFilled: false,
+                                  leftLine: true,
+                                  rightLine: false,
+                                )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Obx(
+                      () => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 106,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CommonText(
+                                  text: CommonString.personal,
+                                  color: (GetXProperties.currentPage.value == 0)
+                                      ? CommonColor.black
+                                      : CommonColor.coffee,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: CommonText(
                                     text: CommonString.details,
                                     color:
                                         (GetXProperties.currentPage.value == 0)
@@ -117,36 +119,40 @@ class FormMainPage extends StatelessWidget {
                                             : CommonColor.coffee,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Column(
-                                  children: [
-                                    CommonText(
-                                      text: CommonString.joining,
-                                      color:
-                                          (GetXProperties.currentPage.value ==
-                                                  1)
-                                              ? CommonColor.black
-                                              : CommonColor.coffee,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    CommonText(
-                                      text: CommonString.details,
-                                      color:
-                                          (GetXProperties.currentPage.value ==
-                                                  1)
-                                              ? CommonColor.black
-                                              : CommonColor.coffee,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ],
                                 ),
-                              ),
-                              Column(
-                                children: [
-                                  CommonText(
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 5),
+                            width: 106,
+                            child: Column(
+                              children: [
+                                CommonText(
+                                  text: CommonString.joining,
+                                  color: (GetXProperties.currentPage.value == 1)
+                                      ? CommonColor.black
+                                      : CommonColor.coffee,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                CommonText(
+                                  text: CommonString.details,
+                                  color: (GetXProperties.currentPage.value == 1)
+                                      ? CommonColor.black
+                                      : CommonColor.coffee,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 106,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: CommonText(
                                     text: CommonString.other,
                                     color:
                                         (GetXProperties.currentPage.value == 2)
@@ -154,22 +160,21 @@ class FormMainPage extends StatelessWidget {
                                             : CommonColor.coffee,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                  CommonText(
-                                    text: CommonString.details,
-                                    color:
-                                        (GetXProperties.currentPage.value == 2)
-                                            ? CommonColor.black
-                                            : CommonColor.coffee,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ],
-                              ),
-                            ],
+                                ),
+                                CommonText(
+                                  text: CommonString.details,
+                                  color: (GetXProperties.currentPage.value == 2)
+                                      ? CommonColor.black
+                                      : CommonColor.coffee,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
               Expanded(
@@ -202,7 +207,9 @@ class FormMainPage extends StatelessWidget {
                   () => (GetXProperties.currentPage.value == 0)
                       ? CommonButtonWithoutIcon(
                           height: 55,
-                          onPressed: () {},
+                          onPressed: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
                           text: CommonString.cancelButton,
                           fontSize: 20,
                           color: CommonColor.coffee,
@@ -226,6 +233,7 @@ class FormMainPage extends StatelessWidget {
                       : CommonButtonWithIcon(
                           height: 55,
                           onPressed: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
                             controller.previousPage(
                               duration: const Duration(microseconds: 1),
                               curve: Curves.bounceIn,
@@ -267,6 +275,7 @@ class FormMainPage extends StatelessWidget {
                       ? CommonButtonWithoutIcon(
                           height: 55,
                           onPressed: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
                             GetXProperties.pageThreeIsDone.value = true;
                           },
                           text: CommonString.done,
@@ -297,6 +306,7 @@ class FormMainPage extends StatelessWidget {
                       : CommonButtonWithIcon(
                           height: 55,
                           onPressed: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
                             if (formKey.currentState!.validate()) {
                               if (GetXProperties.currentPage.value == 1) {
                                 if (GetXProperties.workingHours.value != 0) {
@@ -319,6 +329,10 @@ class FormMainPage extends StatelessWidget {
                                 GetXProperties.pageThreeIsDone.value = false;
                               }
                             }
+                            // controller.nextPage(
+                            //   duration: const Duration(microseconds: 1),
+                            //   curve: Curves.bounceIn,
+                            // );
                           },
                           textDirection: TextDirection.rtl,
                           text: CommonString.nextButton,

@@ -53,35 +53,31 @@ class CommonTextFieldForDate extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        onTap: () async {
+          DateTime? datePicker = await showDatePicker(
+            context: context,
+            initialDate: selectedDate ?? DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2025),
+          );
+          if (datePicker != null) {
+            selectedDate = datePicker;
+            date.text =
+                '${datePicker.day} ${GetXProperties.monthsList[datePicker.month - 1]} ${datePicker.year}';
+          }
+        },
         controller: date,
-        keyboardType: keyBoardType,
+        keyboardType: TextInputType.none,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           label: CommonText(text: label),
           hintText: label,
           border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(5),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(5)),
           ),
-          suffixIcon: GestureDetector(
-            onTap: () async {
-              DateTime? datePicker = await showDatePicker(
-                context: context,
-                initialDate: selectedDate ?? DateTime.now(),
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2025),
-              );
-              if (datePicker != null) {
-                selectedDate = datePicker;
-                date.text =
-                    '${datePicker.day} ${GetXProperties.monthsList[datePicker.month - 1]} ${datePicker.year}';
-              }
-            },
-            child: Icon(
-              CommonIcon.calender.icon,
-              color: CommonColor.coffee,
-            ),
+          suffixIcon: Icon(
+            CommonIcon.calender.icon,
+            color: CommonColor.coffee,
           ),
         ),
         validator: validator,
@@ -95,7 +91,6 @@ class CommonDropDownButtonTextFiled extends StatelessWidget {
       {super.key, required this.label, required this.validator});
   final String label;
   final String? Function(String?) validator;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -103,15 +98,16 @@ class CommonDropDownButtonTextFiled extends StatelessWidget {
       child: ButtonTheme(
         alignedDropdown: true,
         child: DropdownButtonFormField(
-          isExpanded: true,
+          validator: validator,
           value: GetXProperties.dropDownValue,
           decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             label: CommonText(text: label),
             hintText: label,
             border: const OutlineInputBorder(),
+            contentPadding:
+                const EdgeInsets.only(left: 12, top: 18, bottom: 18),
           ),
-          validator: validator,
           items: GetXProperties.dropDownList.map<DropdownMenuItem<String>>(
             (String value) {
               return DropdownMenuItem(
