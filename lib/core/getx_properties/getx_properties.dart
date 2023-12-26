@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:bytecrm_form/module/widget/common_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
@@ -38,9 +35,28 @@ class GetXProperties extends GetxController {
   static RxBool designationIsNotValid = false.obs;
   static RxBool roleIsNotValid = false.obs;
   static RxBool fullTime = true.obs;
-  static RxDouble workingHours = 0.0.obs;
+  static RxDouble workingHourPerDay = 0.0.obs;
+  static RxString totalHours = ''.obs;
+  static RxString totalMinutes = ''.obs;
   static String? image;
   static RxString profileImage = ''.obs;
+
+  //form values
+  static TextEditingController userImage = TextEditingController();
+  static TextEditingController fullName = TextEditingController();
+  static TextEditingController mobileNumber = TextEditingController();
+  static TextEditingController email = TextEditingController();
+  static TextEditingController birthDate = TextEditingController();
+  static TextEditingController anniversaryDate = TextEditingController();
+  static TextEditingController designation = TextEditingController();
+  static TextEditingController role = TextEditingController();
+  static TextEditingController reportsTo = TextEditingController();
+  static TextEditingController joiningDate = TextEditingController();
+  static TextEditingController employmentTime = TextEditingController();
+  static TextEditingController workingHours = TextEditingController();
+
+  //user data list
+  static RxList usersData = [].obs;
 
   static Future pickProfileImage() async {
     final pickedImage =
@@ -71,6 +87,8 @@ class GetXProperties extends GetxController {
       );
       if (croppedImage != null) {
         profileImage.value = croppedImage.path.toString();
+        GetXProperties.userImage.text =
+            GetXProperties.profileImage.value.toString();
       }
       image = '';
     }

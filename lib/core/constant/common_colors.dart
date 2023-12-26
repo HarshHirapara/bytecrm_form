@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CommonColor {
+class CommonColors {
   static const transparent = Colors.transparent;
   static const black = Colors.black;
   static const white = Colors.white;

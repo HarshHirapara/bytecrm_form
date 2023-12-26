@@ -1,7 +1,7 @@
+import 'package:bytecrm_form/module/screen/users_card_screen/users_card_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'module/screen/from_main_page_screen/main_form_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +15,7 @@ void main() {
   runApp(
     const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FormMainPage(),
+      home: UserCards(),
     ),
   );
 }

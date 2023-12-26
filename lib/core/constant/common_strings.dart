@@ -1,5 +1,7 @@
 class CommonString {
-  //appBar title
+  //usr card page
+  static const userCards = 'Users card';
+  //form appBar title
   static const updateEmployee = 'Update Employee';
   //button
   static const nextButton = 'Next';

@@ -23,26 +23,26 @@ class CommonFormStepCheck extends StatelessWidget {
             width: 41,
             child: Divider(
               thickness: 2,
-              color: isFilled ? CommonColor.green : CommonColor.blue,
+              color: isFilled ? CommonColors.green : CommonColors.blue,
             ),
           ),
         Container(
           height: 50,
           width: 50,
           decoration: BoxDecoration(
-            color: CommonColor.transparent,
+            color: CommonColors.transparent,
             borderRadius: const BorderRadius.all(
               Radius.circular(50),
             ),
             border: Border.all(
               width: 3,
-              color: isFilled ? CommonColor.green : CommonColor.blue,
+              color: isFilled ? CommonColors.green : CommonColors.blue,
             ),
           ),
           child: Icon(
             CommonIcon.check.icon,
             size: 40,
-            color: isFilled ? CommonColor.green : CommonColor.blue,
+            color: isFilled ? CommonColors.green : CommonColors.blue,
           ),
         ),
         if (rightLine)
@@ -50,7 +50,7 @@ class CommonFormStepCheck extends StatelessWidget {
             width: 41,
             child: Divider(
               thickness: 2,
-              color: isFilled ? CommonColor.green : CommonColor.blue,
+              color: isFilled ? CommonColors.green : CommonColors.blue,
             ),
           ),
       ],
@@ -79,14 +79,14 @@ class CommonPageNumber extends StatelessWidget {
             width: 49,
             child: Divider(
               thickness: 2,
-              color: isFilled ? CommonColor.green : CommonColor.blue,
+              color: isFilled ? CommonColors.green : CommonColors.blue,
             ),
           ),
         Container(
           height: 34,
           width: 34,
           decoration: const BoxDecoration(
-            color: CommonColor.blue,
+            color: CommonColors.blue,
             borderRadius: BorderRadius.all(
               Radius.circular(50),
             ),
@@ -94,7 +94,7 @@ class CommonPageNumber extends StatelessWidget {
           child: Center(
             child: CommonText(
               text: pageNumber,
-              color: CommonColor.white,
+              color: CommonColors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -105,7 +105,7 @@ class CommonPageNumber extends StatelessWidget {
             width: 49,
             child: Divider(
               thickness: 2,
-              color: isFilled ? CommonColor.green : CommonColor.blue,
+              color: isFilled ? CommonColors.green : CommonColors.blue,
             ),
           ),
       ],
