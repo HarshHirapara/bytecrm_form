@@ -39,7 +39,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                           () => GetXProperties.profileImage.value.isNotEmpty
                               ? CircleAvatar(
                                   radius: 60,
-                                  backgroundColor: CommonColor.transparent,
+                                  backgroundColor: CommonColors.transparent,
                                   backgroundImage: FileImage(
                                     File(
                                       GetXProperties.profileImage.toString(),
@@ -53,12 +53,13 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                                     borderRadius: const BorderRadius.all(
                                       Radius.circular(100),
                                     ),
-                                    border: Border.all(color: CommonColor.blue),
+                                    border:
+                                        Border.all(color: CommonColors.blue),
                                   ),
                                   child: const Center(
                                     child: CommonText(
                                       text: CommonString.profileMiddleName,
-                                      color: CommonColor.blue,
+                                      color: CommonColors.blue,
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -72,19 +73,22 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                             height: 30,
                             width: 30,
                             decoration: const BoxDecoration(
-                              color: CommonColor.black,
+                              color: CommonColors.black,
                               borderRadius: BorderRadius.all(
                                 Radius.circular(50),
                               ),
                               gradient: LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
-                                colors: [CommonColor.white, CommonColor.black],
+                                colors: [
+                                  CommonColors.white,
+                                  CommonColors.black
+                                ],
                               ),
                             ),
                             child: Icon(
                               CommonIcon.camera.icon,
-                              color: CommonColor.white,
+                              color: CommonColors.white,
                               size: 20,
                             ),
                           ),
@@ -96,6 +100,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                 Column(
                   children: [
                     CommonTextField(
+                      controller: GetXProperties.fullName,
                       keyBoardType: TextInputType.text,
                       label: CommonString.fullName,
                       validator: (value) =>
@@ -115,8 +120,8 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(5),
                                       ),
-                                      borderSide:
-                                          BorderSide(color: CommonColor.coffee),
+                                      borderSide: BorderSide(
+                                          color: CommonColors.coffee),
                                     ),
                                   ),
                                 ),
@@ -128,6 +133,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                         Expanded(
                           flex: 4,
                           child: CommonTextField(
+                            controller: GetXProperties.mobileNumber,
                             maxLength: 10,
                             keyBoardType: TextInputType.phone,
                             label: CommonString.mobileNumber,
@@ -148,6 +154,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                       ],
                     ),
                     CommonTextField(
+                        controller: GetXProperties.email,
                         keyBoardType: TextInputType.emailAddress,
                         label: CommonString.emailId,
                         validator: (value) {
@@ -169,6 +176,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                           child: Column(
                             children: [
                               CommonTextFieldForDate(
+                                controller: GetXProperties.birthDate,
                                 lastDate: DateTime.now(),
                                 keyBoardType: TextInputType.datetime,
                                 label: CommonString.birthDate,
@@ -198,6 +206,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                           child: Column(
                             children: [
                               CommonTextFieldForDate(
+                                controller: GetXProperties.anniversaryDate,
                                 lastDate: DateTime(2025),
                                 keyBoardType: TextInputType.datetime,
                                 label: CommonString.anniversaryDate,
@@ -231,6 +240,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                           child: Column(
                             children: [
                               CommonTextField(
+                                controller: GetXProperties.designation,
                                 keyBoardType: TextInputType.text,
                                 label: CommonString.designation,
                                 validator: (value) {
@@ -257,6 +267,10 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                           child: Column(
                             children: [
                               CommonDropDownButtonTextFiled(
+                                onChanged: (String? value) {
+                                  GetXProperties.dropDownValue = value!;
+                                  GetXProperties.role.text = value;
+                                },
                                 label: CommonString.role,
                                 validator: (value) {
                                   if (value == null) {
@@ -282,6 +296,10 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                       ],
                     ),
                     CommonDropDownButtonTextFiled(
+                      onChanged: (String? value) {
+                        GetXProperties.dropDownValue = value!;
+                        GetXProperties.reportsTo.text = value;
+                      },
                       label: CommonString.reportsTo,
                       validator: (value) {
                         if (value == null) {

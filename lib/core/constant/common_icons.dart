@@ -7,4 +7,5 @@ class CommonIcon {
   static const camera = Icon(Icons.camera_alt);
   static const calender = Icon(Icons.calendar_month);
   static const dropDown = Icon(Icons.arrow_drop_down_rounded);
+  static const addUser = Icon(Icons.add);
 }

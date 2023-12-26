@@ -10,17 +10,20 @@ class CommonTextField extends StatelessWidget {
       required this.label,
       required this.validator,
       required this.keyBoardType,
-      this.maxLength});
+      this.maxLength,
+      required this.controller});
   final String? label;
   final String? Function(String?) validator;
   final TextInputType keyBoardType;
   final int? maxLength;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: controller,
         maxLength: maxLength,
         keyboardType: keyBoardType,
         decoration: InputDecoration(
@@ -44,20 +47,24 @@ class CommonTextFieldForDate extends StatelessWidget {
     required this.validator,
     required this.keyBoardType,
     required this.lastDate,
+    required this.controller,
   });
 
   final String label;
   final String? Function(String?) validator;
   final TextInputType keyBoardType;
   final DateTime lastDate;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     DateTime? selectedDate;
-    TextEditingController date = TextEditingController();
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: controller,
+        keyboardType: TextInputType.none,
+        validator: validator,
         onTap: () async {
           DateTime? datePicker = await showDatePicker(
             context: context,
@@ -67,12 +74,10 @@ class CommonTextFieldForDate extends StatelessWidget {
           );
           if (datePicker != null) {
             selectedDate = datePicker;
-            date.text =
+            controller.text =
                 '${datePicker.day} ${GetXProperties.monthsList[datePicker.month - 1]} ${datePicker.year}';
           }
         },
-        controller: date,
-        keyboardType: TextInputType.none,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           label: CommonText(text: label),
@@ -82,20 +87,24 @@ class CommonTextFieldForDate extends StatelessWidget {
           ),
           suffixIcon: Icon(
             CommonIcon.calender.icon,
-            color: CommonColor.coffee,
+            color: CommonColors.coffee,
           ),
         ),
-        validator: validator,
       ),
     );
   }
 }
 
 class CommonDropDownButtonTextFiled extends StatelessWidget {
-  const CommonDropDownButtonTextFiled(
-      {super.key, required this.label, required this.validator});
+  const CommonDropDownButtonTextFiled({
+    super.key,
+    required this.label,
+    required this.validator,
+    required this.onChanged,
+  });
   final String label;
   final String? Function(String?) validator;
+  final void Function(String?) onChanged;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -121,9 +130,7 @@ class CommonDropDownButtonTextFiled extends StatelessWidget {
               );
             },
           ).toList(),
-          onChanged: (String? value) {
-            GetXProperties.dropDownValue = value!;
-          },
+          onChanged: onChanged,
         ),
       ),
     );

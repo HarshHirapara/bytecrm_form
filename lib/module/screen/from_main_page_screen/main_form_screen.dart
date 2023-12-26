@@ -2,6 +2,7 @@ import 'package:bytecrm_form/core/constant/common_colors.dart';
 import 'package:bytecrm_form/core/constant/common_icons.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
 import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
+import 'package:bytecrm_form/core/sql_databse/sql_handler.dart';
 import 'package:bytecrm_form/module/screen/joining_details_form_screen/joining_details_form.dart';
 import 'package:bytecrm_form/module/screen/personal_details_from_screen/personal_details_form_screen.dart';
 import 'package:bytecrm_form/module/widget/common_button.dart';
@@ -24,11 +25,11 @@ class FormMainPage extends StatelessWidget {
           systemOverlayStyle: SystemUiOverlayStyle.dark,
           title: const CommonText(
             text: CommonString.updateEmployee,
-            color: CommonColor.black,
+            color: CommonColors.black,
             fontSize: 21,
             fontWeight: FontWeight.bold,
           ),
-          backgroundColor: CommonColor.transparent,
+          backgroundColor: CommonColors.transparent,
           elevation: 0,
           centerTitle: false,
         ),
@@ -105,8 +106,8 @@ class FormMainPage extends StatelessWidget {
                                 CommonText(
                                   text: CommonString.personal,
                                   color: (GetXProperties.currentPage.value == 0)
-                                      ? CommonColor.black
-                                      : CommonColor.coffee,
+                                      ? CommonColors.black
+                                      : CommonColors.coffee,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 Padding(
@@ -115,8 +116,8 @@ class FormMainPage extends StatelessWidget {
                                     text: CommonString.details,
                                     color:
                                         (GetXProperties.currentPage.value == 0)
-                                            ? CommonColor.black
-                                            : CommonColor.coffee,
+                                            ? CommonColors.black
+                                            : CommonColors.coffee,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -131,15 +132,15 @@ class FormMainPage extends StatelessWidget {
                                 CommonText(
                                   text: CommonString.joining,
                                   color: (GetXProperties.currentPage.value == 1)
-                                      ? CommonColor.black
-                                      : CommonColor.coffee,
+                                      ? CommonColors.black
+                                      : CommonColors.coffee,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 CommonText(
                                   text: CommonString.details,
                                   color: (GetXProperties.currentPage.value == 1)
-                                      ? CommonColor.black
-                                      : CommonColor.coffee,
+                                      ? CommonColors.black
+                                      : CommonColors.coffee,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ],
@@ -156,16 +157,16 @@ class FormMainPage extends StatelessWidget {
                                     text: CommonString.other,
                                     color:
                                         (GetXProperties.currentPage.value == 2)
-                                            ? CommonColor.black
-                                            : CommonColor.coffee,
+                                            ? CommonColors.black
+                                            : CommonColors.coffee,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 CommonText(
                                   text: CommonString.details,
                                   color: (GetXProperties.currentPage.value == 2)
-                                      ? CommonColor.black
-                                      : CommonColor.coffee,
+                                      ? CommonColors.black
+                                      : CommonColors.coffee,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ],
@@ -187,9 +188,7 @@ class FormMainPage extends StatelessWidget {
                   children: [
                     const PersonalDetailsFormScreen(),
                     const JoiningDetailsFormScreen(),
-                    Container(
-                      color: CommonColor.blue,
-                    )
+                    Container(color: CommonColors.blue)
                   ],
                 ),
               ),
@@ -209,22 +208,23 @@ class FormMainPage extends StatelessWidget {
                           height: 55,
                           onPressed: () {
                             FocusManager.instance.primaryFocus?.unfocus();
+                            Get.back();
                           },
                           text: CommonString.cancelButton,
                           fontSize: 20,
-                          color: CommonColor.coffee,
+                          color: CommonColors.coffee,
                           style: const ButtonStyle(
                             padding: MaterialStatePropertyAll(
                               EdgeInsets.only(
                                   left: 41, right: 41, top: 12, bottom: 12),
                             ),
                             backgroundColor: MaterialStatePropertyAll(
-                                CommonColor.transparent),
+                                CommonColors.transparent),
                             elevation: MaterialStatePropertyAll(0),
                           ),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                width: 1.5, color: CommonColor.coffee),
+                                width: 1.5, color: CommonColors.coffee),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(7),
                             ),
@@ -243,15 +243,15 @@ class FormMainPage extends StatelessWidget {
                           textDirection: TextDirection.ltr,
                           text: CommonString.backButton,
                           fontSize: 20,
-                          color: CommonColor.coffee,
+                          color: CommonColors.coffee,
                           icon: Icon(
                             CommonIcon.back.icon,
                             size: 30,
-                            color: CommonColor.coffee,
+                            color: CommonColors.coffee,
                           ),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                width: 1.5, color: CommonColor.coffee),
+                                width: 1.5, color: CommonColors.coffee),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(7),
                             ),
@@ -262,7 +262,7 @@ class FormMainPage extends StatelessWidget {
                                   left: 24, right: 34, top: 9, bottom: 9),
                             ),
                             backgroundColor: MaterialStatePropertyAll(
-                                CommonColor.transparent),
+                                CommonColors.transparent),
                             elevation: MaterialStatePropertyAll(0),
                           ),
                         ),
@@ -274,28 +274,42 @@ class FormMainPage extends StatelessWidget {
                   () => (GetXProperties.currentPage.value == 2)
                       ? CommonButtonWithoutIcon(
                           height: 55,
-                          onPressed: () {
-                            FocusManager.instance.primaryFocus?.unfocus();
+                          onPressed: () async {
                             GetXProperties.pageThreeIsDone.value = true;
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            await SQlDatabaseHandler.insertData(
+                              GetXProperties.userImage.text,
+                              GetXProperties.fullName.text,
+                              GetXProperties.mobileNumber.text,
+                              GetXProperties.email.text,
+                              GetXProperties.birthDate.text,
+                              GetXProperties.anniversaryDate.text,
+                              GetXProperties.designation.text,
+                              GetXProperties.role.text,
+                              GetXProperties.reportsTo.text,
+                              GetXProperties.joiningDate.text,
+                              GetXProperties.employmentTime.text,
+                              GetXProperties.workingHours.text,
+                            );
                           },
                           text: CommonString.done,
                           fontSize: 20,
-                          color: CommonColor.white,
+                          color: CommonColors.white,
                           style: const ButtonStyle(
                             padding: MaterialStatePropertyAll(
                               EdgeInsets.only(
                                   left: 51, right: 51, top: 13, bottom: 13),
                             ),
                             backgroundColor: MaterialStatePropertyAll(
-                                CommonColor.transparent),
+                                CommonColors.transparent),
                             elevation: MaterialStatePropertyAll(0),
                           ),
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                CommonColor.buttonColor3,
-                                CommonColor.buttonColor2,
-                                CommonColor.buttonColor1,
+                                CommonColors.buttonColor3,
+                                CommonColors.buttonColor2,
+                                CommonColors.buttonColor1,
                               ],
                             ),
                             borderRadius: BorderRadius.all(
@@ -309,7 +323,10 @@ class FormMainPage extends StatelessWidget {
                             FocusManager.instance.primaryFocus?.unfocus();
                             if (formKey.currentState!.validate()) {
                               if (GetXProperties.currentPage.value == 1) {
-                                if (GetXProperties.workingHours.value != 0) {
+                                if (GetXProperties.workingHourPerDay.value !=
+                                    0) {
+                                  GetXProperties.employmentTime.text =
+                                      CommonString.fullTime;
                                   controller.nextPage(
                                     duration: const Duration(microseconds: 1),
                                     curve: Curves.bounceIn,
@@ -318,7 +335,7 @@ class FormMainPage extends StatelessWidget {
                                   Get.snackbar(
                                     CommonString.snackBarTitle,
                                     CommonString.snackBarMessage,
-                                    backgroundColor: CommonColor.blue,
+                                    backgroundColor: CommonColors.blue,
                                   );
                                 }
                               } else {
@@ -329,26 +346,22 @@ class FormMainPage extends StatelessWidget {
                                 GetXProperties.pageThreeIsDone.value = false;
                               }
                             }
-                            // controller.nextPage(
-                            //   duration: const Duration(microseconds: 1),
-                            //   curve: Curves.bounceIn,
-                            // );
                           },
                           textDirection: TextDirection.rtl,
                           text: CommonString.nextButton,
                           fontSize: 20,
-                          color: CommonColor.white,
+                          color: CommonColors.white,
                           icon: Icon(
                             CommonIcon.back.icon,
                             size: 30,
-                            color: CommonColor.white,
+                            color: CommonColors.white,
                           ),
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                CommonColor.buttonColor3,
-                                CommonColor.buttonColor2,
-                                CommonColor.buttonColor1,
+                                CommonColors.buttonColor3,
+                                CommonColors.buttonColor2,
+                                CommonColors.buttonColor1,
                               ],
                             ),
                             borderRadius: BorderRadius.all(
@@ -361,7 +374,7 @@ class FormMainPage extends StatelessWidget {
                                   left: 40, right: 30, top: 10, bottom: 10),
                             ),
                             backgroundColor: MaterialStatePropertyAll(
-                                CommonColor.transparent),
+                                CommonColors.transparent),
                             elevation: MaterialStatePropertyAll(0),
                           ),
                         ),
