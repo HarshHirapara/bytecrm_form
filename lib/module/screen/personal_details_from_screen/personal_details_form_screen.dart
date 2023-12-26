@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bytecrm_form/core/constant/common_colors.dart';
 import 'package:bytecrm_form/core/constant/common_icons.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
@@ -20,88 +22,200 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 30, bottom: 15),
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 120,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(100),
-                        ),
-                        border: Border.all(color: CommonColor.blue),
-                      ),
-                      child: const Center(
-                        child: CommonText(
-                          text: CommonString.profileMiddleName,
-                          color: CommonColor.blue,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 85,
-                      left: 85,
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        decoration: const BoxDecoration(
-                          color: CommonColor.black,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50),
-                          ),
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [CommonColor.white, CommonColor.black],
-                          ),
-                        ),
-                        child: Icon(
-                          CommonIcon.camera.icon,
-                          color: CommonColor.white,
-                          size: 20,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Column(
-                children: [
-                  CommonTextField(
-                    keyBoardType: TextInputType.text,
-                    label: CommonString.fullName,
-                    validator: (value) =>
-                        value!.isEmpty ? CommonString.enterName : null,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                decoration: const InputDecoration(
-                                  hintText: CommonString.countryNumberCode,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(5),
+        child: ScrollConfiguration(
+          behavior: const ScrollBehavior(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 30, bottom: 15),
+                  child: GestureDetector(
+                    onTap: () {
+                      GetXProperties.pickProfileImage();
+                    },
+                    child: Stack(
+                      children: [
+                        Obx(
+                          () => GetXProperties.profileImage.value.isNotEmpty
+                              ? CircleAvatar(
+                                  radius: 60,
+                                  backgroundColor: CommonColor.transparent,
+                                  backgroundImage: FileImage(
+                                    File(
+                                      GetXProperties.profileImage.toString(),
                                     ),
-                                    borderSide:
-                                        BorderSide(color: CommonColor.coffee),
+                                  ),
+                                )
+                              : Container(
+                                  height: 120,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(100),
+                                    ),
+                                    border: Border.all(color: CommonColor.blue),
+                                  ),
+                                  child: const Center(
+                                    child: CommonText(
+                                      text: CommonString.profileMiddleName,
+                                      color: CommonColor.blue,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
+                        ),
+                        Positioned(
+                          top: 85,
+                          left: 85,
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: const BoxDecoration(
+                              color: CommonColor.black,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(50),
+                              ),
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [CommonColor.white, CommonColor.black],
+                              ),
+                            ),
+                            child: Icon(
+                              CommonIcon.camera.icon,
+                              color: CommonColor.white,
+                              size: 20,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Column(
+                  children: [
+                    CommonTextField(
+                      keyBoardType: TextInputType.text,
+                      label: CommonString.fullName,
+                      validator: (value) =>
+                          value!.isEmpty ? CommonString.enterName : null,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  decoration: const InputDecoration(
+                                    hintText: CommonString.countryNumberCode,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5),
+                                      ),
+                                      borderSide:
+                                          BorderSide(color: CommonColor.coffee),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 4,
+                          child: CommonTextField(
+                            maxLength: 10,
+                            keyBoardType: TextInputType.phone,
+                            label: CommonString.mobileNumber,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                GetXProperties.numberIsNotValid.value = true;
+                                return CommonString.enterMobileNumber;
+                              } else if (value.length < 10) {
+                                GetXProperties.numberIsNotValid.value = true;
+                                return CommonString.mobileMustBe10Digits;
+                              } else {
+                                GetXProperties.numberIsNotValid.value = false;
+                                return null;
+                              }
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                    CommonTextField(
+                        keyBoardType: TextInputType.emailAddress,
+                        label: CommonString.emailId,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return CommonString.enterEmail;
+                          } else {
+                            if (RegExp(
+                                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                .hasMatch(value)) {
+                              return null;
+                            } else {
+                              return CommonString.emailNotValid;
+                            }
+                          }
+                        }),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CommonTextFieldForDate(
+                                lastDate: DateTime.now(),
+                                keyBoardType: TextInputType.datetime,
+                                label: CommonString.birthDate,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    GetXProperties
+                                        .anniversaryDateIsNotValid.value = true;
+                                    return CommonString.selectBirthDate;
+                                  }
+                                  GetXProperties
+                                      .anniversaryDateIsNotValid.value = false;
+                                  return null;
+                                },
                               ),
                               Obx(
                                 () => SizedBox(
-                                  height: GetXProperties.numberIsNotValid.value
+                                  height:
+                                      GetXProperties.birthDateIsNotValid.value
+                                          ? 20
+                                          : null,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CommonTextFieldForDate(
+                                lastDate: DateTime(2025),
+                                keyBoardType: TextInputType.datetime,
+                                label: CommonString.anniversaryDate,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    GetXProperties.birthDateIsNotValid.value =
+                                        true;
+                                    return CommonString.selectAnniversaryDate;
+                                  }
+                                  GetXProperties.birthDateIsNotValid.value =
+                                      false;
+                                  return null;
+                                },
+                              ),
+                              Obx(
+                                () => SizedBox(
+                                  height: GetXProperties
+                                          .anniversaryDateIsNotValid.value
                                       ? 20
                                       : null,
                                 ),
@@ -109,171 +223,77 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                             ],
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: CommonTextField(
-                          keyBoardType: TextInputType.phone,
-                          label: CommonString.mobileNumber,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              GetXProperties.numberIsNotValid.value = true;
-                              return CommonString.enterMobileNumber;
-                            } else if (value.length < 10 || value.length > 10) {
-                              GetXProperties.numberIsNotValid.value = true;
-                              return CommonString.mobileMustBe10Digits;
-                            } else {
-                              GetXProperties.numberIsNotValid.value = false;
-                              return null;
-                            }
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                  CommonTextField(
-                      keyBoardType: TextInputType.emailAddress,
-                      label: CommonString.emailId,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return CommonString.enterEmail;
-                        } else {
-                          if (RegExp(
-                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                              .hasMatch(value)) {
-                            return null;
-                          } else {
-                            return CommonString.emailNotValid;
-                          }
-                        }
-                      }),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            CommonTextFieldForDate(
-                              keyBoardType: TextInputType.datetime,
-                              label: CommonString.birthDate,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  GetXProperties
-                                      .anniversaryDateIsNotValid.value = true;
-                                  return CommonString.selectBirthDate;
-                                }
-                                GetXProperties.anniversaryDateIsNotValid.value =
-                                    false;
-                                return null;
-                              },
-                            ),
-                            Obx(
-                              () => SizedBox(
-                                height: GetXProperties.birthDateIsNotValid.value
-                                    ? 20
-                                    : null,
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CommonTextField(
+                                keyBoardType: TextInputType.text,
+                                label: CommonString.designation,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    GetXProperties.roleIsNotValid.value = true;
+                                    return CommonString.enterDesignation;
+                                  }
+                                  GetXProperties.roleIsNotValid.value = false;
+                                  return null;
+                                },
                               ),
-                            )
-                          ],
+                              Obx(
+                                () => SizedBox(
+                                  height:
+                                      GetXProperties.designationIsNotValid.value
+                                          ? 20
+                                          : null,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            CommonTextFieldForDate(
-                              keyBoardType: TextInputType.datetime,
-                              label: CommonString.anniversaryDate,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  GetXProperties.birthDateIsNotValid.value =
-                                      true;
-                                  return CommonString.selectAnniversaryDate;
-                                }
-                                GetXProperties.birthDateIsNotValid.value =
-                                    false;
-                                return null;
-                              },
-                            ),
-                            Obx(
-                              () => SizedBox(
-                                height: GetXProperties
-                                        .anniversaryDateIsNotValid.value
-                                    ? 20
-                                    : null,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            CommonTextField(
-                              keyBoardType: TextInputType.text,
-                              label: CommonString.designation,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  GetXProperties.roleIsNotValid.value = true;
-                                  return CommonString.enterDesignation;
-                                }
-                                GetXProperties.roleIsNotValid.value = false;
-                                return null;
-                              },
-                            ),
-                            Obx(
-                              () => SizedBox(
-                                height:
-                                    GetXProperties.designationIsNotValid.value
-                                        ? 20
-                                        : null,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            CommonDropDownButtonTextFiled(
-                              label: CommonString.role,
-                              validator: (value) {
-                                if (value == null) {
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CommonDropDownButtonTextFiled(
+                                label: CommonString.role,
+                                validator: (value) {
+                                  if (value == null) {
+                                    GetXProperties.designationIsNotValid.value =
+                                        true;
+                                    return CommonString.selectRole;
+                                  }
                                   GetXProperties.designationIsNotValid.value =
-                                      true;
-                                  return CommonString.selectRole;
-                                }
-                                GetXProperties.designationIsNotValid.value =
-                                    false;
-                                return null;
-                              },
-                            ),
-                            Obx(
-                              () => SizedBox(
-                                height: GetXProperties.roleIsNotValid.value
-                                    ? 20
-                                    : null,
+                                      false;
+                                  return null;
+                                },
                               ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  CommonDropDownButtonTextFiled(
-                    label: CommonString.reportsTo,
-                    validator: (value) {
-                      if (value == null) {
-                        return CommonString.selectReport;
-                      }
-                      return null;
-                    },
-                  )
-                ],
-              )
-            ],
+                              Obx(
+                                () => SizedBox(
+                                  height: GetXProperties.roleIsNotValid.value
+                                      ? 20
+                                      : null,
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    CommonDropDownButtonTextFiled(
+                      label: CommonString.reportsTo,
+                      validator: (value) {
+                        if (value == null) {
+                          return CommonString.selectReport;
+                        }
+                        return null;
+                      },
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
