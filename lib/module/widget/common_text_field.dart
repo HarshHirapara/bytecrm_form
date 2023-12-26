@@ -9,16 +9,19 @@ class CommonTextField extends StatelessWidget {
       {super.key,
       required this.label,
       required this.validator,
-      required this.keyBoardType});
+      required this.keyBoardType,
+      this.maxLength});
   final String? label;
   final String? Function(String?) validator;
   final TextInputType keyBoardType;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        maxLength: maxLength,
         keyboardType: keyBoardType,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -40,11 +43,13 @@ class CommonTextFieldForDate extends StatelessWidget {
     required this.label,
     required this.validator,
     required this.keyBoardType,
+    required this.lastDate,
   });
 
   final String label;
   final String? Function(String?) validator;
   final TextInputType keyBoardType;
+  final DateTime lastDate;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +63,7 @@ class CommonTextFieldForDate extends StatelessWidget {
             context: context,
             initialDate: selectedDate ?? DateTime.now(),
             firstDate: DateTime(2000),
-            lastDate: DateTime(2025),
+            lastDate: lastDate,
           );
           if (datePicker != null) {
             selectedDate = datePicker;
