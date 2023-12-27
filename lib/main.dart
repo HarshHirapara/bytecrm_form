@@ -11,11 +11,10 @@ void main() {
       DeviceOrientation.portraitDown,
     ],
   );
-
   runApp(
     const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: UserCards(),
+      home: UserCardsHomeScreen(),
     ),
   );
 }

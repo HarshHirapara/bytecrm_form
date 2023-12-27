@@ -267,9 +267,9 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                           child: Column(
                             children: [
                               CommonDropDownButtonTextFiled(
+                                value: GetXProperties.dropDownRole,
                                 onChanged: (String? value) {
-                                  GetXProperties.dropDownValue = value!;
-                                  GetXProperties.role.text = value;
+                                  GetXProperties.dropDownRole = value!;
                                 },
                                 label: CommonString.role,
                                 validator: (value) {
@@ -296,9 +296,9 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                       ],
                     ),
                     CommonDropDownButtonTextFiled(
+                      value: GetXProperties.dropDownReportTo,
                       onChanged: (String? value) {
-                        GetXProperties.dropDownValue = value!;
-                        GetXProperties.reportsTo.text = value;
+                        GetXProperties.dropDownReportTo = value!;
                       },
                       label: CommonString.reportsTo,
                       validator: (value) {

@@ -101,9 +101,11 @@ class CommonDropDownButtonTextFiled extends StatelessWidget {
     required this.label,
     required this.validator,
     required this.onChanged,
+    required this.value,
   });
   final String label;
   final String? Function(String?) validator;
+  final String? value;
   final void Function(String?) onChanged;
   @override
   Widget build(BuildContext context) {
@@ -113,7 +115,7 @@ class CommonDropDownButtonTextFiled extends StatelessWidget {
         alignedDropdown: true,
         child: DropdownButtonFormField(
           validator: validator,
-          value: GetXProperties.dropDownValue,
+          value: value,
           decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             label: CommonText(text: label),

@@ -1,171 +1,84 @@
+import 'dart:io';
+import 'dart:ui';
+import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
+import 'package:bytecrm_form/module/widget/common_text.dart';
 import 'package:flutter/material.dart';
 import '../../core/constant/common_colors.dart';
 
 class UserCard extends StatelessWidget {
-  const UserCard(
-      {super.key,
-      required this.index,
-      required this.user,
-      required this.isFavoriteScreen});
+  const UserCard({super.key, required this.index});
   final int index;
-  final List<Map<String, dynamic>> user;
-  final bool isFavoriteScreen;
 
   @override
   Widget build(BuildContext context) {
-    // final String phone = user[index]['phone'];
-    // final String firstName = user[index]['firstName'];
-    // final String lastName = user[index]['lastName'];
-    return
-        //  GestureDetector(
-        //   onLongPress: () {
-        //     Get.to(() => UserProfile(
-        //           index: index,
-        //           user: user,
-        //           isFavoriteScreen: isFavoriteScreen,
-        //         ));
-        //   },
-        Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Card(
-        elevation: 8,
-        color: index.isEven
-            ? CommonColors.buttonColor1
-            : CommonColors.buttonColor2,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    // Row(
-                    //   children: [
-                    //     Obx(
-                    //       () => IconButton(
-                    //         onPressed: () async {
-                    //           if (GetXDataHandler.favoriteList
-                    //               .contains(user[index])) {
-                    //             GetXDataHandler.favoriteList.removeWhere(
-                    //                 (element) => element == user[index]);
-                    //           } else {
-                    //             GetXDataHandler.favoriteList.add(user[index]);
-                    //           }
-                    //         },
-                    //         icon: user.isEmpty
-                    //             ? CommonIcons.favoriteBorder
-                    //             : GetXDataHandler.favoriteList
-                    //                     .contains(user[index])
-                    //                 ? CommonIcons.favorite
-                    //                 : CommonIcons.favoriteBorder,
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
-                    const CircleAvatar(
-                      radius: 55,
-                      // child: Text(
-                      // '${firstName[0]}${lastName[0]}',
-                      // style: TextStyle(fontSize: 35),
-                      // ),
-                    ),
-                    Text(
-                      '${user[index]['id']} | ${user[index]['firstName']} ${user[index]['lastName']}',
-                      style: const TextStyle(
-                        color: CommonColors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      '${user[index]['email']}',
-                      style: const TextStyle(
-                        color: CommonColors.black,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children: [
-                    //       TextSpan(
-                    //         text: CommonString.website,
-                    //         style: const TextStyle(
-                    //           color: CommonColors.black,
-                    //           fontWeight: FontWeight.w700,
-                    //         ),
-                    //       ),
-                    //       TextSpan(
-                    //         text: user[index]['website'],
-                    //         style: const TextStyle(
-                    //           color: CommonColors.black,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    Divider(thickness: 2),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children: [
-                    //       TextSpan(
-                    //         text: CommonString.address,
-                    //         style: const TextStyle(
-                    //           color: CommonColors.black,
-                    //           fontWeight: FontWeight.w700,
-                    //         ),
-                    //       ),
-                    //       TextSpan(
-                    //         text: user[index]['address'],
-                    //         style: const TextStyle(
-                    //           color: CommonColors.black,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    Divider(thickness: 2),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children: [
-                    //       TextSpan(
-                    //         text: CommonString.company,
-                    //         style: const TextStyle(
-                    //           color: CommonColors.black,
-                    //           fontWeight: FontWeight.w700,
-                    //         ),
-                    //       ),
-                    //       TextSpan(
-                    //         text: user[index]['company'],
-                    //         style: const TextStyle(
-                    //           color: CommonColors.black,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-
-                    Divider(thickness: 2),
-                    // Row(
-                    //   children: [
-                    //     CommonIcons.call,
-                    //     Text(
-                    //       phone.substring(10),
-                    //     ),
-                    //   ],
-                    // ),
-                  ],
-                ),
-              )
+    final String fullNamFirstLater =
+        ('${GetXProperties.usersData[index]['full_name'][0]}').toUpperCase();
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              CommonColors.buttonColor1,
+              CommonColors.buttonColor2,
+              CommonColors.buttonColor3
             ],
           ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GetXProperties.usersData[index]['user_image'].isEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 60,
+                      width: 60,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: [
+                                CommonColors.buttonColor1,
+                                CommonColors.buttonColor2,
+                                CommonColors.buttonColor3
+                              ])),
+                      child: Center(
+                        child: Text(
+                          fullNamFirstLater,
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: FileImage(
+                        File(GetXProperties.usersData[index]['user_image']),
+                      ),
+                    ),
+                  ),
+            CommonText(
+              text:
+                  '${GetXProperties.usersData[index]['id']} | ${GetXProperties.usersData[index]['full_name']}',
+              color: CommonColors.black,
+              fontWeight: FontWeight.w400,
+              fontSize: 15,
+            ),
+            CommonText(
+              text: '${GetXProperties.usersData[index]['email']}',
+              color: CommonColors.black,
+              fontSize: 10,
+            ),
+          ],
         ),
       ),
     );

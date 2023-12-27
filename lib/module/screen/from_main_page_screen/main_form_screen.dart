@@ -5,6 +5,7 @@ import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
 import 'package:bytecrm_form/core/sql_databse/sql_handler.dart';
 import 'package:bytecrm_form/module/screen/joining_details_form_screen/joining_details_form.dart';
 import 'package:bytecrm_form/module/screen/personal_details_from_screen/personal_details_form_screen.dart';
+import 'package:bytecrm_form/module/screen/users_card_screen/users_card_screen.dart';
 import 'package:bytecrm_form/module/widget/common_button.dart';
 import 'package:bytecrm_form/module/widget/common_text.dart';
 import 'package:flutter/material.dart';
@@ -208,6 +209,24 @@ class FormMainPage extends StatelessWidget {
                           height: 55,
                           onPressed: () {
                             FocusManager.instance.primaryFocus?.unfocus();
+                            GetXProperties.userImage.clear();
+                            GetXProperties.fullName.clear();
+                            GetXProperties.mobileNumber.clear();
+                            GetXProperties.email.clear();
+                            GetXProperties.birthDate.clear();
+                            GetXProperties.anniversaryDate.clear();
+                            GetXProperties.designation.clear();
+                            // GetXProperties.dropDownRole = '';
+                            // GetXProperties.dropDownReportTo = '';
+                            GetXProperties.joiningDate.clear();
+                            GetXProperties.employmentTime.clear();
+                            GetXProperties.workingHours.clear();
+
+                            GetXProperties.currentPage.value = 0;
+                            GetXProperties.profileImage.value = '';
+                            GetXProperties.workingHourPerDay.value = 0;
+                            GetXProperties.totalHours.value = '';
+                            GetXProperties.totalMinutes.value = '';
                             Get.back();
                           },
                           text: CommonString.cancelButton,
@@ -219,12 +238,15 @@ class FormMainPage extends StatelessWidget {
                                   left: 41, right: 41, top: 12, bottom: 12),
                             ),
                             backgroundColor: MaterialStatePropertyAll(
-                                CommonColors.transparent),
+                              CommonColors.transparent,
+                            ),
                             elevation: MaterialStatePropertyAll(0),
                           ),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                width: 1.5, color: CommonColors.coffee),
+                              width: 1.5,
+                              color: CommonColors.coffee,
+                            ),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(7),
                             ),
@@ -251,7 +273,9 @@ class FormMainPage extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                width: 1.5, color: CommonColors.coffee),
+                              width: 1.5,
+                              color: CommonColors.coffee,
+                            ),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(7),
                             ),
@@ -262,7 +286,8 @@ class FormMainPage extends StatelessWidget {
                                   left: 24, right: 34, top: 9, bottom: 9),
                             ),
                             backgroundColor: MaterialStatePropertyAll(
-                                CommonColors.transparent),
+                              CommonColors.transparent,
+                            ),
                             elevation: MaterialStatePropertyAll(0),
                           ),
                         ),
@@ -285,12 +310,32 @@ class FormMainPage extends StatelessWidget {
                               GetXProperties.birthDate.text,
                               GetXProperties.anniversaryDate.text,
                               GetXProperties.designation.text,
-                              GetXProperties.role.text,
-                              GetXProperties.reportsTo.text,
+                              GetXProperties.dropDownRole.toString(),
+                              GetXProperties.dropDownReportTo.toString(),
                               GetXProperties.joiningDate.text,
                               GetXProperties.employmentTime.text,
                               GetXProperties.workingHours.text,
                             );
+                            GetXProperties.userImage.clear();
+                            GetXProperties.fullName.clear();
+                            GetXProperties.mobileNumber.clear();
+                            GetXProperties.email.clear();
+                            GetXProperties.birthDate.clear();
+                            GetXProperties.anniversaryDate.clear();
+                            GetXProperties.designation.clear();
+                            // GetXProperties.dropDownRole = '';
+                            // GetXProperties.dropDownReportTo = '';
+                            GetXProperties.joiningDate.clear();
+                            GetXProperties.employmentTime.clear();
+                            GetXProperties.workingHours.clear();
+
+                            GetXProperties.profileImage.value = '';
+                            GetXProperties.workingHourPerDay.value = 0;
+                            GetXProperties.currentPage.value = 0;
+                            GetXProperties.totalHours.value = '';
+                            GetXProperties.totalMinutes.value = '';
+                            Get.offAll(const UserCardsHomeScreen());
+                            Get.back();
                           },
                           text: CommonString.done,
                           fontSize: 20,
