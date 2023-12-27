@@ -16,11 +16,12 @@ class CommonText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: TextAlign.center,
       style: TextStyle(
-        color: color,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-      ),
+          color: color,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          overflow: TextOverflow.ellipsis),
     );
   }
 }

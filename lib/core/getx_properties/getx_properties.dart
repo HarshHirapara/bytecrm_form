@@ -5,6 +5,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class GetXProperties extends GetxController {
+  //user data list
+  static RxList usersData = [].obs;
+
+  //current page of form
   static RxInt currentPage = 0.obs;
 
   static final List<String> dropDownList = [
@@ -27,8 +31,10 @@ class GetXProperties extends GetxController {
     "November",
     "December"
   ];
+
+  static String? image;
+
   static RxBool pageThreeIsDone = false.obs;
-  static String? dropDownValue;
   static RxBool numberIsNotValid = false.obs;
   static RxBool birthDateIsNotValid = false.obs;
   static RxBool anniversaryDateIsNotValid = false.obs;
@@ -38,7 +44,6 @@ class GetXProperties extends GetxController {
   static RxDouble workingHourPerDay = 0.0.obs;
   static RxString totalHours = ''.obs;
   static RxString totalMinutes = ''.obs;
-  static String? image;
   static RxString profileImage = ''.obs;
 
   //form values
@@ -49,14 +54,11 @@ class GetXProperties extends GetxController {
   static TextEditingController birthDate = TextEditingController();
   static TextEditingController anniversaryDate = TextEditingController();
   static TextEditingController designation = TextEditingController();
-  static TextEditingController role = TextEditingController();
-  static TextEditingController reportsTo = TextEditingController();
+  static String? dropDownRole;
+  static String? dropDownReportTo;
   static TextEditingController joiningDate = TextEditingController();
   static TextEditingController employmentTime = TextEditingController();
   static TextEditingController workingHours = TextEditingController();
-
-  //user data list
-  static RxList usersData = [].obs;
 
   static Future pickProfileImage() async {
     final pickedImage =

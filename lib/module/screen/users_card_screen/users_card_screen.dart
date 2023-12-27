@@ -1,27 +1,28 @@
 import 'dart:developer';
-
 import 'package:bytecrm_form/core/constant/common_colors.dart';
-import 'package:bytecrm_form/core/constant/common_icons.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
 import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
 import 'package:bytecrm_form/core/sql_databse/sql_handler.dart';
-import 'package:bytecrm_form/module/screen/from_main_page_screen/main_form_screen.dart';
 import 'package:bytecrm_form/module/widget/common_text.dart';
+import 'package:bytecrm_form/module/widget/common_user_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constant/common_icons.dart';
+import '../from_main_page_screen/main_form_screen.dart';
 
-class UserCards extends StatefulWidget {
-  const UserCards({super.key});
+class UserCardsHomeScreen extends StatefulWidget {
+  const UserCardsHomeScreen({super.key});
 
   @override
-  State<UserCards> createState() => _UserCardsState();
+  State<UserCardsHomeScreen> createState() => _UserCardsHomeScreenState();
 }
 
-class _UserCardsState extends State<UserCards> {
+class _UserCardsHomeScreenState extends State<UserCardsHomeScreen> {
   Future refreshData() async {
     final data = await SQlDatabaseHandler.getData();
     GetXProperties.usersData.assignAll(data);
     log(GetXProperties.usersData.toString());
+    log(GetXProperties.usersData.length.toString());
   }
 
   @override
@@ -40,7 +41,16 @@ class _UserCardsState extends State<UserCards> {
         backgroundColor: CommonColors.blue,
         elevation: 0,
       ),
-      body: const Center(),
+      body: Obx(
+        () => GridView.builder(
+          itemCount: GetXProperties.usersData.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3),
+          itemBuilder: (context, index) {
+            return UserCard(index: index);
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: CommonColors.blue,
         onPressed: () {
@@ -48,7 +58,7 @@ class _UserCardsState extends State<UserCards> {
         },
         child: Icon(
           CommonIcon.addUser.icon,
-          size: 40,
+          size: 35,
         ),
       ),
     );
