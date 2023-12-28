@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:bytecrm_form/core/constant/common_colors.dart';
 import 'package:bytecrm_form/core/constant/common_icons.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
 import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
 import 'package:bytecrm_form/module/widget/common_text.dart';
 import 'package:bytecrm_form/module/widget/common_text_field.dart';
+import 'package:bytecrm_form/module/widget/common_user_profile_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 
@@ -37,14 +36,10 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                       children: [
                         Obx(
                           () => GetXProperties.profileImage.value.isNotEmpty
-                              ? CircleAvatar(
+                              ? CommonUserProfilePhoto(
                                   radius: 60,
-                                  backgroundColor: CommonColors.transparent,
-                                  backgroundImage: FileImage(
-                                    File(
+                                  userImage:
                                       GetXProperties.profileImage.toString(),
-                                    ),
-                                  ),
                                 )
                               : Container(
                                   height: 120,
@@ -269,7 +264,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                               CommonDropDownButtonTextFiled(
                                 value: GetXProperties.dropDownRole,
                                 onChanged: (String? value) {
-                                  GetXProperties.dropDownRole = value!;
+                                  GetXProperties.dropDownRole = value;
                                 },
                                 label: CommonString.role,
                                 validator: (value) {
@@ -298,7 +293,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                     CommonDropDownButtonTextFiled(
                       value: GetXProperties.dropDownReportTo,
                       onChanged: (String? value) {
-                        GetXProperties.dropDownReportTo = value!;
+                        GetXProperties.dropDownReportTo = value;
                       },
                       label: CommonString.reportsTo,
                       validator: (value) {

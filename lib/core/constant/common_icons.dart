@@ -8,4 +8,7 @@ class CommonIcon {
   static const calender = Icon(Icons.calendar_month);
   static const dropDown = Icon(Icons.arrow_drop_down_rounded);
   static const addUser = Icon(Icons.add);
+  static const call = Icon(Icons.call);
+  static const person = Icon(Icons.person);
+  static const work = Icon(Icons.work_history);
 }

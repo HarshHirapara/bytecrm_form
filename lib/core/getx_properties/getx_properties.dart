@@ -95,4 +95,25 @@ class GetXProperties extends GetxController {
       image = '';
     }
   }
+
+  static clearData() {
+    GetXProperties.userImage.clear();
+    GetXProperties.fullName.clear();
+    GetXProperties.mobileNumber.clear();
+    GetXProperties.email.clear();
+    GetXProperties.birthDate.clear();
+    GetXProperties.anniversaryDate.clear();
+    GetXProperties.designation.clear();
+    GetXProperties.dropDownRole = null;
+    GetXProperties.dropDownReportTo = null;
+    GetXProperties.joiningDate.clear();
+    GetXProperties.employmentTime.clear();
+    GetXProperties.workingHours.clear();
+    GetXProperties.currentPage.value = 0;
+    GetXProperties.fullTime.value = true;
+    GetXProperties.profileImage.value = '';
+    GetXProperties.workingHourPerDay.value = 0;
+    GetXProperties.totalHours.value = '';
+    GetXProperties.totalMinutes.value = '';
+  }
 }

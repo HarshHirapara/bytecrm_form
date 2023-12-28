@@ -49,4 +49,11 @@ class CommonString {
   static const selectJoiningDate = 'please select joining date';
   static const snackBarMessage = 'Please increase working hours';
   static const snackBarTitle = 'Waring';
+
+  //user card screen
+  static const noUserFound = 'No user found!!';
+
+  //user details page
+  static const date = "Date's";
+  static const personalDetails = "Personal Detail's";
 }
