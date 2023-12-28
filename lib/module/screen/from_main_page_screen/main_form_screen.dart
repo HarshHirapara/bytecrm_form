@@ -209,25 +209,8 @@ class FormMainPage extends StatelessWidget {
                           height: 55,
                           onPressed: () {
                             FocusManager.instance.primaryFocus?.unfocus();
-                            GetXProperties.userImage.clear();
-                            GetXProperties.fullName.clear();
-                            GetXProperties.mobileNumber.clear();
-                            GetXProperties.email.clear();
-                            GetXProperties.birthDate.clear();
-                            GetXProperties.anniversaryDate.clear();
-                            GetXProperties.designation.clear();
-                            // GetXProperties.dropDownRole = '';
-                            // GetXProperties.dropDownReportTo = '';
-                            GetXProperties.joiningDate.clear();
-                            GetXProperties.employmentTime.clear();
-                            GetXProperties.workingHours.clear();
-
-                            GetXProperties.currentPage.value = 0;
-                            GetXProperties.profileImage.value = '';
-                            GetXProperties.workingHourPerDay.value = 0;
-                            GetXProperties.totalHours.value = '';
-                            GetXProperties.totalMinutes.value = '';
-                            Get.back();
+                            GetXProperties.clearData();
+                            Get.offAll(() => const UserCardsHomeScreen());
                           },
                           text: CommonString.cancelButton,
                           fontSize: 20,
@@ -316,26 +299,9 @@ class FormMainPage extends StatelessWidget {
                               GetXProperties.employmentTime.text,
                               GetXProperties.workingHours.text,
                             );
-                            GetXProperties.userImage.clear();
-                            GetXProperties.fullName.clear();
-                            GetXProperties.mobileNumber.clear();
-                            GetXProperties.email.clear();
-                            GetXProperties.birthDate.clear();
-                            GetXProperties.anniversaryDate.clear();
-                            GetXProperties.designation.clear();
-                            // GetXProperties.dropDownRole = '';
-                            // GetXProperties.dropDownReportTo = '';
-                            GetXProperties.joiningDate.clear();
-                            GetXProperties.employmentTime.clear();
-                            GetXProperties.workingHours.clear();
-
-                            GetXProperties.profileImage.value = '';
-                            GetXProperties.workingHourPerDay.value = 0;
-                            GetXProperties.currentPage.value = 0;
-                            GetXProperties.totalHours.value = '';
-                            GetXProperties.totalMinutes.value = '';
-                            Get.offAll(const UserCardsHomeScreen());
-                            Get.back();
+                            GetXProperties.clearData();
+                            Get.offAll(() => const UserCardsHomeScreen());
+                            // Get.back();
                           },
                           text: CommonString.done,
                           fontSize: 20,
@@ -370,8 +336,6 @@ class FormMainPage extends StatelessWidget {
                               if (GetXProperties.currentPage.value == 1) {
                                 if (GetXProperties.workingHourPerDay.value !=
                                     0) {
-                                  GetXProperties.employmentTime.text =
-                                      CommonString.fullTime;
                                   controller.nextPage(
                                     duration: const Duration(microseconds: 1),
                                     curve: Curves.bounceIn,

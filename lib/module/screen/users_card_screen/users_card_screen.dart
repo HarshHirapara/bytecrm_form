@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:bytecrm_form/core/constant/common_colors.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
 import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
@@ -21,8 +20,6 @@ class _UserCardsHomeScreenState extends State<UserCardsHomeScreen> {
   Future refreshData() async {
     final data = await SQlDatabaseHandler.getData();
     GetXProperties.usersData.assignAll(data);
-    log(GetXProperties.usersData.toString());
-    log(GetXProperties.usersData.length.toString());
   }
 
   @override
@@ -41,15 +38,24 @@ class _UserCardsHomeScreenState extends State<UserCardsHomeScreen> {
         backgroundColor: CommonColors.blue,
         elevation: 0,
       ),
-      body: Obx(
-        () => GridView.builder(
-          itemCount: GetXProperties.usersData.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3),
-          itemBuilder: (context, index) {
-            return UserCard(index: index);
-          },
-        ),
+      body: RefreshIndicator(
+        onRefresh: () async {},
+        child: Obx(() => GetXProperties.usersData.isNotEmpty
+            ? GridView.builder(
+                itemCount: GetXProperties.usersData.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  return UserCard(index: index);
+                },
+              )
+            : const Center(
+                child: CommonText(
+                  text: CommonString.noUserFound,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              )),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: CommonColors.blue,

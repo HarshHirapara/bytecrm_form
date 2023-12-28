@@ -18,10 +18,11 @@ class CommonText extends StatelessWidget {
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          overflow: TextOverflow.ellipsis),
+        color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 }

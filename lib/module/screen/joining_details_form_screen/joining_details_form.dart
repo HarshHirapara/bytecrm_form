@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bytecrm_form/core/constant/common_colors.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
 import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
@@ -165,6 +167,11 @@ class JoiningDetailsFormScreen extends StatelessWidget {
                     ((GetXProperties.workingHourPerDay.value / 60) < 12)
                         ? GetXProperties.fullTime.value = false
                         : GetXProperties.fullTime.value = true;
+                    ((GetXProperties.workingHourPerDay.value / 60) < 12)
+                        ? GetXProperties.employmentTime.text =
+                            CommonString.partTime
+                        : GetXProperties.employmentTime.text =
+                            CommonString.fullTime;
 
                     GetXProperties.totalHours.value = (GetXProperties
                                     .workingHourPerDay.value ~/
