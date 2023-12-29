@@ -18,7 +18,8 @@ class SQlDatabaseHandler {
       reports_to TEXT,
       joining_date TEXT,
       employment_time TEXT,
-      working_hour TEXT
+      working_hour TEXT,
+      slider_value DOUBLE
     )""");
   }
 
@@ -45,6 +46,7 @@ class SQlDatabaseHandler {
     String joiningDate,
     String employmentTime,
     String workingHours,
+    double sliderValue,
   ) async {
     final database = await SQlDatabaseHandler.database();
     final data = {
@@ -60,6 +62,7 @@ class SQlDatabaseHandler {
       'joining_date': joiningDate,
       'employment_time': employmentTime,
       'working_hour': workingHours,
+      'slider_value': sliderValue,
     };
     final userData = await database.insert(
       'userDataTable',
@@ -73,5 +76,43 @@ class SQlDatabaseHandler {
   static Future<List<Map<String, dynamic>>> getData() async {
     final database = await SQlDatabaseHandler.database();
     return await database.query('userDataTable', orderBy: 'id');
+  }
+
+  static Future updateData(
+    int id,
+    String userImage,
+    String fullName,
+    String mobileNumber,
+    String email,
+    String birthDate,
+    String anniversaryDate,
+    String designation,
+    String role,
+    String reportsTo,
+    String joiningDate,
+    String employmentTime,
+    String workingHours,
+    double sliderValue,
+  ) async {
+    final database = await SQlDatabaseHandler.database();
+    final data = {
+      'id': id,
+      'user_image': userImage,
+      'full_name': fullName,
+      'mobile_number': mobileNumber,
+      'email': email,
+      'birth_date': birthDate,
+      'anniversary_date': anniversaryDate,
+      'designation': designation,
+      'role': role,
+      'reports_to': reportsTo,
+      'joining_date': joiningDate,
+      'employment_time': employmentTime,
+      'working_hour': workingHours,
+      'slider_value': sliderValue
+    };
+    final result = await database
+        .update('userDataTable', data, where: 'id=?', whereArgs: [id]);
+    log(result.toString());
   }
 }

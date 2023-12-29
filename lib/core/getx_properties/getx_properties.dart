@@ -1,3 +1,5 @@
+import 'package:bytecrm_form/core/constant/common_colors.dart';
+import 'package:bytecrm_form/core/constant/common_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
@@ -41,14 +43,15 @@ class GetXProperties extends GetxController {
   static RxBool designationIsNotValid = false.obs;
   static RxBool roleIsNotValid = false.obs;
   static RxBool fullTime = true.obs;
+  static RxBool insertDataOrUpdateData = true.obs;
   static RxDouble workingHourPerDay = 0.0.obs;
   static RxString totalHours = ''.obs;
   static RxString totalMinutes = ''.obs;
   static RxString profileImage = ''.obs;
 
   //form values
-  static TextEditingController userImage = TextEditingController();
   static TextEditingController fullName = TextEditingController();
+  static RxString userImage = ''.obs;
   static TextEditingController mobileNumber = TextEditingController();
   static TextEditingController email = TextEditingController();
   static TextEditingController birthDate = TextEditingController();
@@ -58,7 +61,7 @@ class GetXProperties extends GetxController {
   static String? dropDownReportTo;
   static TextEditingController joiningDate = TextEditingController();
   static TextEditingController employmentTime = TextEditingController();
-  static TextEditingController workingHours = TextEditingController();
+  static RxString workingHours = ''.obs;
 
   static Future pickProfileImage() async {
     final pickedImage =
@@ -78,27 +81,29 @@ class GetXProperties extends GetxController {
         ],
         uiSettings: [
           AndroidUiSettings(
-            toolbarTitle: 'Crop Image',
-            toolbarColor: Colors.blue,
-            toolbarWidgetColor: Colors.white,
+            toolbarTitle: CommonString.cropImage,
+            toolbarColor: CommonColors.blue,
+            toolbarWidgetColor: CommonColors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,
           ),
-          IOSUiSettings(title: 'Crop Image')
+          IOSUiSettings(
+            title: CommonString.cropImage,
+            aspectRatioLockDimensionSwapEnabled: true,
+          )
         ],
       );
       if (croppedImage != null) {
         profileImage.value = croppedImage.path.toString();
-        GetXProperties.userImage.text =
-            GetXProperties.profileImage.value.toString();
+        GetXProperties.userImage.value = GetXProperties.profileImage.toString();
       }
-      image = '';
+      image = null;
     }
   }
 
   static clearData() {
-    GetXProperties.userImage.clear();
     GetXProperties.fullName.clear();
+    GetXProperties.userImage.value = '';
     GetXProperties.mobileNumber.clear();
     GetXProperties.email.clear();
     GetXProperties.birthDate.clear();
@@ -108,12 +113,24 @@ class GetXProperties extends GetxController {
     GetXProperties.dropDownReportTo = null;
     GetXProperties.joiningDate.clear();
     GetXProperties.employmentTime.clear();
-    GetXProperties.workingHours.clear();
+    GetXProperties.workingHours.value = '';
     GetXProperties.currentPage.value = 0;
     GetXProperties.fullTime.value = true;
     GetXProperties.profileImage.value = '';
     GetXProperties.workingHourPerDay.value = 0;
     GetXProperties.totalHours.value = '';
     GetXProperties.totalMinutes.value = '';
+  }
+
+  static Future workingHoursCalculation() async {
+    totalHours.value = (workingHourPerDay.value ~/ 60) < 10
+        ? '0${workingHourPerDay.value ~/ 60}:'
+        : '${workingHourPerDay.value ~/ 60}:';
+
+    totalMinutes.value = (workingHourPerDay.value % 60) < 10
+        ? '0${(workingHourPerDay.value % 60).toInt()}'
+        : '${(workingHourPerDay.value % 60).toInt()}';
+
+    workingHours.value = totalHours.toString() + totalMinutes.toString();
   }
 }
