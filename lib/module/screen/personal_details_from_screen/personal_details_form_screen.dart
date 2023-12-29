@@ -35,11 +35,11 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                     child: Stack(
                       children: [
                         Obx(
-                          () => GetXProperties.profileImage.value.isNotEmpty
+                          () => GetXProperties.userImage.isNotEmpty
                               ? CommonUserProfilePhoto(
                                   radius: 60,
                                   userImage:
-                                      GetXProperties.profileImage.toString(),
+                                      GetXProperties.userImage.value.toString(),
                                 )
                               : Container(
                                   height: 120,
@@ -109,6 +109,7 @@ class _PersonalDetailsFormScreenState extends State<PersonalDetailsFormScreen> {
                             child: Column(
                               children: [
                                 TextFormField(
+                                  keyboardType: TextInputType.number,
                                   decoration: const InputDecoration(
                                     hintText: CommonString.countryNumberCode,
                                     border: OutlineInputBorder(

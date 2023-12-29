@@ -11,4 +11,6 @@ class CommonIcon {
   static const call = Icon(Icons.call);
   static const person = Icon(Icons.person);
   static const work = Icon(Icons.work_history);
+  static const edit = Icon(Icons.edit);
+  static const star = Icon(Icons.star);
 }

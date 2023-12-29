@@ -17,6 +17,7 @@ class UserCard extends StatelessWidget {
       onTap: () {
         Get.to(
           () => UserDetailsPage(
+            userId: GetXProperties.usersData[index]['id'],
             index: index,
             fullName: GetXProperties.usersData[index]['full_name'],
             userImage: GetXProperties.usersData[index]['user_image'],
@@ -31,6 +32,7 @@ class UserCard extends StatelessWidget {
             joiningDate: GetXProperties.usersData[index]['joining_date'],
             employmentTime: GetXProperties.usersData[index]['employment_time'],
             workingHours: GetXProperties.usersData[index]['working_hour'],
+            sliderValue: GetXProperties.usersData[index]['slider_value'],
           ),
         );
       },
@@ -58,42 +60,46 @@ class UserCard extends StatelessWidget {
                 Radius.circular(10),
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GetXProperties.usersData[index]['user_image'].isEmpty
-                    ? CommonUserProfileWithoutImage(
-                        fullName: GetXProperties.usersData[index]['full_name'],
-                        hight: 80,
-                        width: 80,
-                        fontSize: 40,
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: CommonUserProfilePhoto(
-                            radius: 40,
-                            userImage: GetXProperties.usersData[index]
-                                ['user_image']),
-                      ),
-                const CommonDivider(
-                  color: CommonColors.black,
-                  bottom: 10,
-                  left: 10,
-                  right: 10,
-                ),
-                CommonText(
-                  text:
-                      '${GetXProperties.usersData[index]['id']} | ${GetXProperties.usersData[index]['full_name']}',
-                  color: CommonColors.black,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15,
-                ),
-                CommonText(
-                  text: '${GetXProperties.usersData[index]['email']}',
-                  color: CommonColors.black,
-                  fontSize: 13,
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GetXProperties.usersData[index]['user_image'].isEmpty
+                      ? CommonUserProfileWithoutImage(
+                          fullName: GetXProperties.usersData[index]
+                              ['full_name'],
+                          hight: 80,
+                          width: 80,
+                          fontSize: 40,
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: CommonUserProfilePhoto(
+                              radius: 40,
+                              userImage: GetXProperties.usersData[index]
+                                  ['user_image']),
+                        ),
+                  const CommonDivider(
+                    color: CommonColors.black,
+                    bottom: 10,
+                    left: 4,
+                    right: 4,
+                  ),
+                  CommonText(
+                    text:
+                        '${GetXProperties.usersData[index]['id']} | ${GetXProperties.usersData[index]['full_name']}',
+                    color: CommonColors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
+                  CommonText(
+                    text: '${GetXProperties.usersData[index]['email']}',
+                    color: CommonColors.black,
+                    fontSize: 13,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -8,6 +8,7 @@ class CommonString {
   static const cancelButton = 'Cancel';
   static const backButton = 'Back ';
   static const done = 'Done';
+  static const update = 'Update';
   //steps
   static const personal = 'Personal';
   static const joining = 'Joining';
@@ -34,6 +35,7 @@ class CommonString {
   static const partTime = 'Part Time';
   static const workingHourPerDay = 'WORKING HOUR PER DAY';
   static const hr = ' hr';
+  static const zeroHour = '00:00';
 
   //validation warning
   static const enterName = 'Please Enter Name';
@@ -56,4 +58,7 @@ class CommonString {
   //user details page
   static const date = "Date's";
   static const personalDetails = "Personal Detail's";
+
+  //crop Image
+  static const cropImage = 'Crop Image';
 }

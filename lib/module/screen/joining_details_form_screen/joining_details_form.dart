@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bytecrm_form/core/constant/common_colors.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
 import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
@@ -53,6 +51,10 @@ class JoiningDetailsFormScreen extends StatelessWidget {
                         GetXProperties.fullTime.value = true;
                         GetXProperties.employmentTime.text =
                             CommonString.fullTime;
+                        if (GetXProperties.workingHourPerDay.value < 720) {
+                          GetXProperties.workingHourPerDay.value = 720;
+                          GetXProperties.workingHoursCalculation();
+                        }
                       },
                       height: 40,
                       width: 150,
@@ -88,6 +90,11 @@ class JoiningDetailsFormScreen extends StatelessWidget {
                         GetXProperties.fullTime.value = false;
                         GetXProperties.employmentTime.text =
                             CommonString.partTime;
+                        if (GetXProperties.workingHourPerDay.value > 720 ||
+                            GetXProperties.workingHourPerDay.value == 0) {
+                          GetXProperties.workingHourPerDay.value = 720;
+                          GetXProperties.workingHoursCalculation();
+                        }
                       },
                       height: 40,
                       width: 150,
@@ -136,10 +143,9 @@ class JoiningDetailsFormScreen extends StatelessWidget {
                     () => Row(
                       children: [
                         CommonText(
-                          text: GetXProperties.totalHours.isNotEmpty
-                              ? GetXProperties.totalHours.toString() +
-                                  GetXProperties.totalMinutes.toString()
-                              : '00:00',
+                          text: (GetXProperties.workingHours.value.isNotEmpty)
+                              ? GetXProperties.workingHours.toString()
+                              : CommonString.zeroHour,
                           color: CommonColors.orange,
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -173,22 +179,7 @@ class JoiningDetailsFormScreen extends StatelessWidget {
                         : GetXProperties.employmentTime.text =
                             CommonString.fullTime;
 
-                    GetXProperties.totalHours.value = (GetXProperties
-                                    .workingHourPerDay.value ~/
-                                60) <
-                            10
-                        ? '0${GetXProperties.workingHourPerDay.value ~/ 60}:'
-                        : '${GetXProperties.workingHourPerDay.value ~/ 60}:';
-
-                    GetXProperties.totalMinutes
-                        .value = (GetXProperties.workingHourPerDay.value % 60) <
-                            10
-                        ? '0${(GetXProperties.workingHourPerDay.value % 60).toInt()}'
-                        : '${(GetXProperties.workingHourPerDay.value % 60).toInt()}';
-
-                    GetXProperties.workingHours.text =
-                        GetXProperties.totalHours.toString() +
-                            GetXProperties.totalMinutes.toString();
+                    GetXProperties.workingHoursCalculation();
                   },
                 ),
               ),

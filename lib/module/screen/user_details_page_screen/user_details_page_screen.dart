@@ -1,16 +1,20 @@
 import 'package:bytecrm_form/core/constant/common_colors.dart';
 import 'package:bytecrm_form/core/constant/common_icons.dart';
 import 'package:bytecrm_form/core/constant/common_strings.dart';
+import 'package:bytecrm_form/core/getx_properties/getx_properties.dart';
+import 'package:bytecrm_form/module/screen/from_main_page_screen/main_form_screen.dart';
 import 'package:bytecrm_form/module/widget/Common_user_detail_card.dart';
 import 'package:bytecrm_form/module/widget/common_divider.dart';
 import 'package:bytecrm_form/module/widget/common_text.dart';
 import 'package:bytecrm_form/module/widget/common_user_profile_photo.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserDetailsPage extends StatelessWidget {
   const UserDetailsPage({
     super.key,
     required this.index,
+    required this.userId,
     required this.fullName,
     required this.userImage,
     required this.email,
@@ -23,8 +27,10 @@ class UserDetailsPage extends StatelessWidget {
     required this.joiningDate,
     required this.employmentTime,
     required this.workingHours,
+    required this.sliderValue,
   });
   final int index;
+  final int userId;
   final String fullName;
   final String userImage;
   final String email;
@@ -37,6 +43,7 @@ class UserDetailsPage extends StatelessWidget {
   final String joiningDate;
   final String employmentTime;
   final String workingHours;
+  final double sliderValue;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +51,40 @@ class UserDetailsPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: CommonText(text: fullName),
+        backgroundColor: CommonColors.blue,
+        actions: [
+          IconButton(
+            onPressed: () {
+              GetXProperties.insertDataOrUpdateData.value = false;
+              GetXProperties.fullName.text = fullName;
+              GetXProperties.userImage.value = userImage;
+              GetXProperties.mobileNumber.text = mobile;
+              GetXProperties.email.text = email;
+              GetXProperties.birthDate.text = birthDate;
+              GetXProperties.anniversaryDate.text = anniversaryDate;
+              GetXProperties.designation.text = designation;
+              GetXProperties.dropDownRole = role;
+              GetXProperties.dropDownReportTo = reportsTo;
+              GetXProperties.joiningDate.text = joiningDate;
+              GetXProperties.employmentTime.text = employmentTime;
+              GetXProperties.workingHours.value = workingHours;
+              GetXProperties.currentPage.value = 0;
+              //employment time
+              GetXProperties.employmentTime.text == CommonString.fullTime
+                  ? GetXProperties.fullTime.value = true
+                  : GetXProperties.fullTime.value = false;
+              // GetXProperties.fullTime.value = true;
+              // GetXProperties.profileImage.value = '';
+              GetXProperties.workingHourPerDay.value = sliderValue;
+              // GetXProperties.totalHours.value = '';
+              // GetXProperties.totalMinutes.value = '';
+              Get.to(() => FormMainPage(
+                    userIdForUpdate: userId,
+                  ));
+            },
+            icon: CommonIcon.edit,
+          ),
+        ],
       ),
       body: ScrollConfiguration(
         behavior: const ScrollBehavior(),
@@ -264,6 +305,7 @@ class UserDetailsPage extends StatelessWidget {
                                   padding: EdgeInsets.only(bottom: 10),
                                   child: Row(
                                     children: [
+                                      CommonIcon.star,
                                       SizedBox(width: 5),
                                       CommonText(
                                         text: CommonString.other,
